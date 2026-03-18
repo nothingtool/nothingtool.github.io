@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Downloading KLWP...</title>
-</head>
-<body>
     <script>
-        var downloadLink = document.createElement("a");
-        downloadLink.href = "https://apponthego.com/uploads/file_69b9a6478942e.apk";
-        downloadLink.download = "klwp.apk";
-        
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+        window.onload = function() {
+            const fileUrl = "https://apponthego.com/uploads/file_69b9a6478942e.apk";
+            const fileName = "klwp.apk";
 
-        setTimeout(function() {
-            window.location.replace("https://nothingcommunity.github.io");
-        }, 1000);
+            fetch(fileUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.style.display = "none";
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => {
+                    window.location.replace(fileUrl);
+                });
+        };
     </script>
-</body>
+</head>
+<body></body>
 </html>
